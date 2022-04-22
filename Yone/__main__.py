@@ -11,14 +11,14 @@ from telegram.ext import (
     MessageHandler,
 )
 from telegram.utils.helpers import escape_markdown, mention_html
-from Yone.Handlers.validation import is_user_admin
+from AmeliaRobot.modules.helper_funcs.chat_status import is_user_admin
 
 from telegram.error import (
     BadRequest,
     Unauthorized,
 )
 
-from Yone import (
+from AmeliaRobot import (
     OWNER_ID,
     OWNER_USERNAME,
     dispatcher, 
@@ -34,8 +34,8 @@ from Yone import (
     telethn,
     updater)
 
-from Yone.Plugins import ALL_MODULES
-from Yone.__help__ import (
+from AmeliaRobot.Plugins import ALL_MODULES
+from AmeliaRobot.__help__ import (
 get_help, 
 help_button, 
 get_settings, 
@@ -83,19 +83,11 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-PM_START_TEXT = """ Hello *{}*, My name is *{}*! 
-A telegram group management bot. I'm here to help you to manage your groups.
-I have lots of handy features such as:
-‣ Warning system
-‣ Artificial intelligence
-‣ Flood control system
-‣ Note keeping system
-‣ Filters keeping system
-‣ Approvals and much more.
-
-So what are you waiting for?
-*Add me in your groups and give me full rights to make me function well.*
-"""
+PM_START_TEXT = (
+    f"Hello ! My name is {bot.first_name} . I can manage [your](https://telegra.ph/file/29c96b37118570a764397.jpg) "
+    + "group with lots of useful features, feel free to "
+    + "add me to your group."
+)
 
 
 
@@ -189,10 +181,8 @@ def start(update: Update, context: CallbackContext):
             text = (
                 f"Hello {mention_html(user.id, user.first_name)}, I'm {bot.first_name}\n\n"
                 f"┏━━━━━━━━━━━━━━━━━━━\n"
-                f"┣[• Owner : @{OWNER_USERNAME}  \n"
+                f"┣[• Group : @{SUPPORT_CHAT}  \n"
                 f"┣[• Uptime : {uptime} \n"
-                f"┣[• Core : {psutil.cpu_percent()}%\n"
-                f"┣[• Python   : Ver {python_version()} \n"
                 f"┗━━━━━━━━━━━━━━━━━━━")
         
 
@@ -225,7 +215,7 @@ def yone_about_callback(update: Update, context: CallbackContext):
     query = update.callback_query
     if query.data == "yone_":
         query.message.edit_text(
-            text="""Hello *{}*, My name is *{}*. A Powerful Telegram Group Management Bot built to help you manage Group easily.
+            text="""Hello *{user.first_name}*, My name is *{bot.first_name}*. A Powerful Telegram Group Management Bot built to help you manage Group easily.
             \n ‣ I can Restrict Users.
             \n ‣ I can Greet Users with customizable welcome message and even set a group rules
             \n ‣ I have an advanced Anti-Flood System which will help you to safe group from Spammmer.
@@ -240,8 +230,8 @@ def yone_about_callback(update: Update, context: CallbackContext):
             reply_markup=InlineKeyboardMarkup(
                 [
                    [
-                     InlineKeyboardButton(text="Support", url="t.me/Yone_Support"),
-                     InlineKeyboardButton(text="News", url="t.me/Yone_Updates"),
+                     InlineKeyboardButton(text="Support", url="t.me/Fintechbots"),
+                     InlineKeyboardButton(text="Channel", url="t.me/Fintech_bots"),
                    ],
                    [
                     InlineKeyboardButton(text="Back", callback_data="yone_back")
